@@ -4,7 +4,6 @@
   "projects": {
     "api": "apps/api",
     "api-interfaces": "libs/api-interfaces",
-    "daisy-demo": "apps/daisy-demo",
-    "daisy-demo-e2e": "apps/daisy-demo-e2e"
+    "frontend": "apps/frontend"
   }
 }
