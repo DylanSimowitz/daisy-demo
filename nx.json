@@ -18,21 +18,14 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ],
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
         "accessToken": "Njk5YTVlYWMtMDk4ZC00NDdhLTljZTgtOGZjNzcwZmY1ZGMyfHJlYWQtd3JpdGU="
       }
     }
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ]
+      "dependsOn": ["^build"]
     }
   },
   "generators": {
@@ -50,5 +43,5 @@
       "style": "scss"
     }
   },
-  "defaultProject": "daisy-demo"
+  "defaultProject": "frontend"
 }

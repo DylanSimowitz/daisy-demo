@@ -1,23 +1,21 @@
 {
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "apps/daisy-demo/src",
+  "sourceRoot": "apps/frontend/src",
   "prefix": "daisy-demo",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/daisy-demo",
-        "index": "apps/daisy-demo/src/index.html",
-        "main": "apps/daisy-demo/src/main.ts",
-        "polyfills": "apps/daisy-demo/src/polyfills.ts",
-        "tsConfig": "apps/daisy-demo/tsconfig.app.json",
+        "outputPath": "dist/apps/frontend",
+        "index": "apps/frontend/src/index.html",
+        "main": "apps/frontend/src/main.ts",
+        "polyfills": "apps/frontend/src/polyfills.ts",
+        "tsConfig": "apps/frontend/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": [
-          "apps/daisy-demo/src/favicon.ico",
-          "apps/daisy-demo/src/assets"
-        ],
-        "styles": ["apps/daisy-demo/src/styles.scss"],
+        "assets": ["apps/frontend/src/favicon.ico", "apps/frontend/src/assets"],
+        "styles": ["apps/frontend/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -36,8 +34,8 @@
           ],
           "fileReplacements": [
             {
-              "replace": "apps/daisy-demo/src/environments/environment.ts",
-              "with": "apps/daisy-demo/src/environments/environment.prod.ts"
+              "replace": "apps/frontend/src/environments/environment.ts",
+              "with": "apps/frontend/src/environments/environment.prod.ts"
             }
           ],
           "outputHashing": "all"
@@ -57,38 +55,54 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "daisy-demo:build:production"
+          "browserTarget": "frontend:build:production"
         },
         "development": {
-          "browserTarget": "daisy-demo:build:development"
+          "browserTarget": "frontend:build:development"
         }
       },
       "defaultConfiguration": "development",
       "options": {
-        "proxyConfig": "apps/daisy-demo/proxy.conf.json"
+        "proxyConfig": "apps/frontend/proxy.conf.json"
       }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "daisy-demo:build"
+        "browserTarget": "frontend:build"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": [
-          "apps/daisy-demo/**/*.ts",
-          "apps/daisy-demo/**/*.html"
-        ]
+        "lintFilePatterns": ["apps/frontend/**/*.ts", "apps/frontend/**/*.html"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/daisy-demo"],
+      "outputs": ["coverage/apps/frontend"],
       "options": {
-        "jestConfig": "apps/daisy-demo/jest.config.ts",
+        "jestConfig": "apps/frontend/jest.config.ts",
         "passWithNoTests": true
+      }
+    },
+    "docker": {
+      "executor": "@nx-tools/nx-docker:build",
+      "options": {
+        "metadata": {
+          "images": ["ghcr.io/dylansimowitz/daisy-demo/frontend"],
+          "load": true,
+          "tags": [
+            "type=schedule",
+            "type=ref,event=branch",
+            "type=ref,event=tag",
+            "type=ref,event=pr",
+            "type=semver,pattern={{version}}",
+            "type=semver,pattern={{major}}.{{minor}}",
+            "type=semver,pattern={{major}}",
+            "type=sha,prefix=sha-"
+          ]
+        }
       }
     }
   },
