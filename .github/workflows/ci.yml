@@ -81,8 +81,8 @@ jobs:
     env:
       NX_CLOUD_DISTRIBUTED_EXECUTION: false
       INPUT_PUSH: true
-      INPUT_CACHE_FROM: type=registry,ref=ghcr.io/gperdomor/nx-docker-sandbox/api:buildcache
-      INPUT_CACHE_TO: type=registry,ref=ghcr.io/gperdomor/nx-docker-sandbox/api:buildcache,mode=max
+      INPUT_CACHE_FROM: type=registry,ref=ghcr.io/dylansimowitz/daisy-demo/api:buildcache
+      INPUT_CACHE_TO: type=registry,ref=ghcr.io/dylansimowitz/daisy-demo/api:buildcache,mode=max
     steps:
       - uses: actions/checkout@v2
         with:
