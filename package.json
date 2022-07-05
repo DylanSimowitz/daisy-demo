@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "nx",
-    "start": "nx run-many --parallel --target=serve --projects=api,daisy-demo",
+    "start": "nx run-many --parallel --target=serve --projects=api,frontend",
     "build": "nx build",
     "test": "nx test"
   },
