@@ -1,0 +1,17 @@
+<div daisyDemoClickOutside (clickOutside)="close()">
+  <input
+    type="text"
+    [(ngModel)]="text"
+    (ngModelChange)="search($event)"
+    (click)="toggleOpen()"
+    class="options__input"
+    [placeholder]="placeholder"
+  />
+  <div *ngIf="isOpen" class="options__dropdown">
+    <ng-container *ngFor="let item of items">
+      <div (click)="setSelected(item)" class="options__dropdown__item">
+        <span>{{ item.label }}</span>
+      </div>
+    </ng-container>
+  </div>
+</div>
