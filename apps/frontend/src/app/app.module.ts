@@ -6,13 +6,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { OptionsComponent } from './components/autocomplete/options/options.component';
 import { ClickOutsideDirective } from './directives/clickoutside.directive';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [BrowserModule, HttpClientModule, CommonModule],
-  declarations: [
-    OptionsComponent,
-    ClickOutsideDirective,
-  ],
+  imports: [BrowserModule, HttpClientModule, CommonModule, FormsModule],
+  declarations: [OptionsComponent, ClickOutsideDirective],
   providers: [],
   bootstrap: [AppComponent],
 })
