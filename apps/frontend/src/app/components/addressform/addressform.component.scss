@@ -1,0 +1,25 @@
+:host {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  display: block;
+}
+
+input {
+  all: unset;
+  display: block;
+  padding: 8px 10px;
+  outline: 1px solid var(--gray-100);
+  border-radius: 2px;
+  width: 100%;
+  box-sizing: inherit;
+}
+
+.row {
+  display: flex;
+  margin: -8px;
+  padding: 8px;
+  > * {
+    margin: 8px;
+  }
+}

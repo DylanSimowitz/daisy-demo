@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as Google from '@googlemaps/google-maps-services-js';
 import { GooglePlacesAutocompleteResponse } from '@daisy-demo/api-interfaces';
+import { getAddressComponents } from './functions';
 
 @Injectable()
 export class GooglePlacesService {
@@ -19,7 +20,7 @@ export class GooglePlacesService {
    * */
   async getAutocomplete(
     input: string
-  ): Promise<GooglePlacesAutocompleteResponse[]> {
+  ): Promise<GooglePlacesAutocompleteResponse> {
     const places = await this.client
       .placeAutocomplete({
         params: {
@@ -44,11 +45,16 @@ export class GooglePlacesService {
               key: process.env.MAPS_API_KEY,
             },
           })
-          .then(({ data }) => ({
-            place_id,
-            description,
-            address_components: data.result.address_components,
-          }))
+          .then(({ data }) => {
+            const address = getAddressComponents(
+              data.result.address_components
+            );
+            return {
+              place_id,
+              description,
+              address,
+            };
+          })
       )
     );
   }
