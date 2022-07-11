@@ -1,0 +1,7 @@
+<daisy-demo-autocomplete
+  [options]="results"
+  (changeEvent)="keyChange.next($event)"
+  (selectEvent)="selectChange.next($event)"
+  [search]="false"
+  placeholder="Street address"
+></daisy-demo-autocomplete>

@@ -2,7 +2,7 @@
   <input
     type="text"
     [(ngModel)]="text"
-    (ngModelChange)="search($event)"
+    (ngModelChange)="_search($event)"
     (click)="toggleOpen()"
     class="options__input"
     [placeholder]="placeholder"

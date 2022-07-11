@@ -2,16 +2,26 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import Option from './Option';
 
 @Component({
-  selector: 'daisy-demo-options',
-  templateUrl: './options.component.html',
-  styleUrls: ['./options.component.scss'],
+  selector: 'daisy-demo-autocomplete',
+  templateUrl: './autocomplete.component.html',
+  styleUrls: ['./autocomplete.component.scss'],
 })
-export class OptionsComponent implements OnInit {
-  @Input() options!: Option[];
+export class AutocompleteComponent implements OnInit {
+  @Input()
+  set options(value: Option[]) {
+    this.items = value;
+  }
+  get options() {
+    return this.items;
+  }
+
   @Input() placeholder?: string = 'Select';
+  @Input() search = true;
+  @Input() customSearch?: (value: string) => void;
   @Output() openEvent = new EventEmitter<boolean>();
   @Output() selectEvent = new EventEmitter<Option>();
   @Output() focusEvent = new EventEmitter<boolean>();
+  @Output() changeEvent = new EventEmitter<string>();
 
   items: Option[] = this.options;
   private _isOpen = false;
@@ -20,6 +30,7 @@ export class OptionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.items = this.options;
+    this._search = this.customSearch ? this.customSearch : this._search;
   }
 
   get isOpen() {
@@ -43,7 +54,10 @@ export class OptionsComponent implements OnInit {
   }
   set text(value: string) {
     this._text = value;
-    this.search(value);
+    this.changeEvent.emit(value);
+    if (this.search) {
+      this._search(value);
+    }
   }
 
   toggleOpen() {
@@ -62,7 +76,7 @@ export class OptionsComponent implements OnInit {
       this.reset();
       return;
     }
-    this._text = this._selected.label;
+    this._text = this._selected.value;
     this.focusEvent.emit(false);
   }
 
@@ -72,10 +86,12 @@ export class OptionsComponent implements OnInit {
     this.text = item.label;
   }
 
-  search(value: string) {
-    const query = new RegExp(`^${value}`);
-    this.items = this.options.filter((option) => {
-      return query.test(option.label);
-    });
+  _search(value: string) {
+    if (this.search) {
+      const query = new RegExp(`^${value}`);
+      this.items = this.options.filter((option) => {
+        return query.test(option.label);
+      });
+    }
   }
 }
